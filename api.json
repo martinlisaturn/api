@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.1",
+    "version": "1.1.0",
     "title": "OneSignal",
     "description": "A powerful way to send personalized messages at scale and build effective customer engagement strategies. Learn more at onesignal.com",
     "contact": {
@@ -210,7 +210,8 @@
             "items": {
               "type": "string"
             },
-            "nullable": true
+            "nullable": true,
+            "deprecated": true
           },
           "include_external_user_ids": {
             "type": "array",
@@ -218,7 +219,8 @@
             "items": {
               "type": "string"
             },
-            "nullable": true
+            "nullable": true,
+            "deprecated": true
           },
           "include_email_tokens": {
             "type": "array",
@@ -275,6 +277,28 @@
             "items": {
               "type": "string"
             }
+          },
+          "include_aliases": {
+            "type": "object",
+            "properties": {
+              "alias_label": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "target_channel": {
+            "type": "string",
+            "enum": ["push", "email", "sms"]
           }
         }
       },
@@ -1621,6 +1645,225 @@
             "$ref": "#/components/schemas/NoSubscribersError"
           }]
       },
+      "IdentityObject": {
+        "type": "object",
+        "properties": {
+          "onesignal_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "onesignal_id TODO"
+          },
+          "external_id": {
+            "type": "string",
+            "description": "external_id TODO"
+          }
+        },
+        "additionalProperties": {
+          "type": "string"
+        },
+        "required": [
+          "onesignal_id"
+        ]
+      },
+      "PropertiesObject": {
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "object",
+            "description": "tags TODO",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "language": {
+            "type": "string",
+            "description": "language TODO"
+          },
+          "timezone_id": {
+            "type": "string",
+            "description": "timezone_id TODO"
+          },
+          "lat": {
+            "type": "number",
+            "description": "lat TODO"
+          },
+          "long": {
+            "type": "number",
+            "description": "long TODO"
+          },
+          "country": {
+            "type": "string",
+            "description": "country TODO"
+          },
+          "first_active": {
+            "type": "number",
+            "description": "first_active TODO"
+          },
+          "last_active": {
+            "type": "number",
+            "description": "last_active TODO"
+          },
+          "amount_spent": {
+            "type": "number",
+            "description": "amount_spent TODO"
+          },
+          "purchases": {
+            "type": "array",
+            "description": "purchases TODO",
+            "items": {
+              "$ref": "#/components/schemas/Purchase"
+            }
+          },
+          "ip": {
+            "type": "string",
+            "description": "ip TODO"
+          }
+        }
+      },
+      "PropertiesDeltas": {
+        "type": "object",
+        "properties": {
+          "session_time": {
+            "type": "number"
+          },
+          "session_count": {
+            "type": "number"
+          },
+          "amount_spent": {
+            "type": "number"
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Purchase"
+            }
+          }
+        }
+      },
+      "SubscriptionType": {
+        "type": "string",
+        "description": "TODO",
+        "enum": [
+          "iOSPush",
+          "AndroidPush",
+          "FireOSPush",
+          "ChromeExtensionPush",
+          "ChromePush",
+          "WindowsPush",
+          "SafariLegacyPush",
+          "FirefoxPush",
+          "macOSPush",
+          "HuaweiPush",
+          "SafariPush",
+          "Email",
+          "SMS"
+        ]
+      },
+      "SubscriptionObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "TODO"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SubscriptionType"
+          },
+          "token": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "TODO"
+          },
+          "notification_types": {
+            "type": "number",
+            "description": "TODO"
+          },
+          "session_time": {
+            "type": "number",
+            "description": "TODO"
+          },
+          "session_count": {
+            "type": "number",
+            "description": "TODO"
+          },
+          "sdk": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "device_model": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "device_os": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "rooted": {
+            "type": "boolean",
+            "description": "TODO"
+          },
+          "test_type": {
+            "type": "number",
+            "description": "TODO"
+          },
+          "app_version": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "net_type": {
+            "type": "number",
+            "description": "TODO"
+          },
+          "carrier": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "web_auth": {
+            "type": "string",
+            "description": "TODO"
+          },
+          "web_p256": {
+            "type": "string",
+            "description": "TODO"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "$ref": "#/components/schemas/PropertiesObject"
+          },
+          "identity": {
+            "$ref": "#/components/schemas/IdentityObject"
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionObject"
+            }
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "$ref": "#/components/schemas/PropertiesObject"
+          },
+          "refresh_device_metadata": {
+            "type": "boolean",
+            "default": false
+          },
+          "deltas": {
+            "$ref": "#/components/schemas/PropertiesDeltas"
+          }
+        }
+      },
       "CreateNotificationSuccessResponse": {
         "type": "object",
         "properties": {
@@ -2797,6 +3040,617 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExportPlayersBadRequestResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "operationId": "create_user",
+        "description": "Creates a User, optionally Subscriptions owned by the User as well as Aliases.\nAliases provided in the payload will be used to look up an existing User.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "ACCEPTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Multiple User Identity Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "conflicting_aliases": {
+                                "type": "object",
+                                "additionalProperties": true
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/user/by/{alias_label}/{alias_id}": {
+      "get": {
+        "operationId": "fetch_user",
+        "description": "Returns the User’s properties, Aliases, and Subscriptions.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "update_user",
+        "description": "Updates an existing User’s properties.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "subscription_id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "ACCEPTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "$ref": "#/components/schemas/PropertiesObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete_user",
+        "description": "Removes the User identified by (:alias_label, :alias_id), and all Subscriptions and Aliases",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/by/{alias_label}/{alias_id}/identity": {
+      "put": {
+        "operationId": "identify_user_by_alias",
+        "description": "Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identity": {
+                    "$ref": "#/components/schemas/IdentityObject"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityObject"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      },
+      "get": {
+        "operationId": "fetch_user_identity",
+        "description": "Lists all Aliases for the User identified by (:alias_label, :alias_id).",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/user/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}": {
+      "delete": {
+        "operationId": "delete_alias",
+        "description": "Deletes an alias by alias label",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "alias_label",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "alias_label_to_delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/subscriptions/{subscription_id}": {
+      "patch": {
+        "operationId": "update_subscription",
+        "description": "Updates an existing Subscription’s properties.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscription": {
+                    "$ref": "#/components/schemas/SubscriptionObject"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete_subscription",
+        "description": "Deletes the Subscription.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "ACCEPTED"
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/subscriptions/{subscription_id}/identity": {
+      "get": {
+        "operationId": "fetch_aliases",
+        "description": "Lists all Aliases for the User identified by :subscription_id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "identity": {
+                      "$ref": "#/components/schemas/IdentityObject"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      },
+      "put": {
+        "operationId": "identify_user_by_subscription_id",
+        "description": "Upserts one or more Aliases for the User identified by :subscription_id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identity": {
+                    "$ref": "#/components/schemas/IdentityObject"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/subscriptions/{subscription_id}/owner": {
+      "patch": {
+        "operationId": "transfer_subscription",
+        "description": "Transfers this Subscription to the User identified by the identity in the payload.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identity": {
+                    "$ref": "#/components/schemas/IdentityObject"
+                  },
+                  "retain_previous_owner": {
+                    "type": "boolean",
+                    "description": "The request must specify whether the subscription’s previous user should be retained. If so and the subscription is the last subscription for the previous user, then an orphan user will be created. This only applies if the subscription is the previous user’s only subscription. If the previous user had other subscriptions, nothing happens to the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityObject"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "app_key": []
+          }
+        ]
+      }
+    },
+    "/subscriptions/{subscription_id}/iams": {
+      "get": {
+        "operationId": "get_eligible_iams",
+        "description": "Manifest of In-App Messages the Subscription is eligible to display by the SDK.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subscription_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "in_app_messages": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    }
+                  }
                 }
               }
             }
