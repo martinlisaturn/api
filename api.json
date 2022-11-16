@@ -1639,22 +1639,7 @@
           }]
       },
       "IdentityObject": {
-        "type": "object",
-        "properties": {
-          "onesignal_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "external_id": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": {
-          "type": "string"
-        },
-        "required": [
-          "onesignal_id"
-        ]
+        "type": "object"
       },
       "PropertiesObject": {
         "type": "object",
@@ -3015,7 +3000,7 @@
         ]
       }
     },
-    "/user": {
+    "/apps/{app_id}/user": {
       "post": {
         "operationId": "create_user",
         "description": "Creates a User, optionally Subscriptions owned by the User as well as Aliases.\nAliases provided in the payload will be used to look up an existing User.",
@@ -3076,6 +3061,16 @@
             }
           }
         },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "security": [
           {
             "app_key": []
@@ -3083,11 +3078,19 @@
         ]
       }
     },
-    "/user/by/{alias_label}/{alias_id}": {
+    "/apps/{app_id}/user/by/{alias_label}/{alias_id}": {
       "get": {
         "operationId": "fetch_user",
         "description": "Returns the User’s properties, Aliases, and Subscriptions.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "alias_label",
@@ -3127,6 +3130,14 @@
         "operationId": "update_user",
         "description": "Updates an existing User’s properties.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "header",
             "name": "subscription_id",
@@ -3191,6 +3202,14 @@
         "parameters": [
           {
             "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
             "name": "alias_label",
             "required": true,
             "schema": {
@@ -3213,11 +3232,19 @@
         }
       }
     },
-    "/user/by/{alias_label}/{alias_id}/identity": {
-      "put": {
+    "/apps/{app_id}/user/by/{alias_label}/{alias_id}/identity": {
+      "patch": {
         "operationId": "identify_user_by_alias",
         "description": "Upserts one or more Aliases to an existing User identified by (:alias_label, :alias_id).",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "alias_label",
@@ -3300,6 +3327,14 @@
         "parameters": [
           {
             "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
             "name": "alias_label",
             "required": true,
             "schema": {
@@ -3334,11 +3369,19 @@
         ]
       }
     },
-    "/user/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}": {
+    "/apps/{app_id}/user/by/{alias_label}/{alias_id}/identity/{alias_label_to_delete}": {
       "delete": {
         "operationId": "delete_alias",
         "description": "Deletes an alias by alias label",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "alias_label",
@@ -3383,11 +3426,19 @@
         ]
       }
     },
-    "/subscriptions/{subscription_id}": {
+    "/apps/{app_id}/subscriptions/{subscription_id}": {
       "patch": {
         "operationId": "update_subscription",
         "description": "Updates an existing Subscription’s properties.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "subscription_id",
@@ -3429,6 +3480,14 @@
         "parameters": [
           {
             "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
             "name": "subscription_id",
             "required": true,
             "schema": {
@@ -3448,11 +3507,19 @@
         ]
       }
     },
-    "/subscriptions/{subscription_id}/identity": {
+    "/apps/{app_id}/subscriptions/{subscription_id}/identity": {
       "get": {
         "operationId": "fetch_aliases",
         "description": "Lists all Aliases for the User identified by :subscription_id.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "subscription_id",
@@ -3485,10 +3552,18 @@
           }
         ]
       },
-      "put": {
+      "patch": {
         "operationId": "identify_user_by_subscription_id",
         "description": "Upserts one or more Aliases for the User identified by :subscription_id.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "subscription_id",
@@ -3532,11 +3607,19 @@
         ]
       }
     },
-    "/subscriptions/{subscription_id}/owner": {
+    "/apps/{app_id}/subscriptions/{subscription_id}/owner": {
       "patch": {
         "operationId": "transfer_subscription",
         "description": "Transfers this Subscription to the User identified by the identity in the payload.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "subscription_id",
@@ -3584,11 +3667,19 @@
         ]
       }
     },
-    "/subscriptions/{subscription_id}/iams": {
+    "/apps/{app_id}/subscriptions/{subscription_id}/iams": {
       "get": {
         "operationId": "get_eligible_iams",
         "description": "Manifest of In-App Messages the Subscription is eligible to display by the SDK.",
         "parameters": [
+          {
+            "in": "path",
+            "name": "app_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "path",
             "name": "subscription_id",
