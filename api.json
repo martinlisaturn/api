@@ -1650,12 +1650,10 @@
         "properties": {
           "onesignal_id": {
             "type": "string",
-            "format": "uuid",
-            "description": "onesignal_id TODO"
+            "format": "uuid"
           },
           "external_id": {
-            "type": "string",
-            "description": "external_id TODO"
+            "type": "string"
           }
         },
         "additionalProperties": {
@@ -1670,53 +1668,42 @@
         "properties": {
           "tags": {
             "type": "object",
-            "description": "tags TODO",
             "additionalProperties": {
               "type": "string"
             }
           },
           "language": {
-            "type": "string",
-            "description": "language TODO"
+            "type": "string"
           },
           "timezone_id": {
-            "type": "string",
-            "description": "timezone_id TODO"
+            "type": "string"
           },
           "lat": {
-            "type": "number",
-            "description": "lat TODO"
+            "type": "number"
           },
           "long": {
-            "type": "number",
-            "description": "long TODO"
+            "type": "number"
           },
           "country": {
-            "type": "string",
-            "description": "country TODO"
+            "type": "string"
           },
           "first_active": {
-            "type": "number",
-            "description": "first_active TODO"
+            "type": "number"
           },
           "last_active": {
-            "type": "number",
-            "description": "last_active TODO"
+            "type": "number"
           },
           "amount_spent": {
-            "type": "number",
-            "description": "amount_spent TODO"
+            "type": "number"
           },
           "purchases": {
             "type": "array",
-            "description": "purchases TODO",
             "items": {
               "$ref": "#/components/schemas/Purchase"
             }
           },
           "ip": {
-            "type": "string",
-            "description": "ip TODO"
+            "type": "string"
           }
         }
       },
@@ -1742,7 +1729,6 @@
       },
       "SubscriptionType": {
         "type": "string",
-        "description": "TODO",
         "enum": [
           "iOSPush",
           "AndroidPush",
@@ -1764,71 +1750,55 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid",
-            "description": "TODO"
+            "format": "uuid"
           },
           "type": {
             "$ref": "#/components/schemas/SubscriptionType"
           },
           "token": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "enabled": {
-            "type": "boolean",
-            "description": "TODO"
+            "type": "boolean"
           },
           "notification_types": {
-            "type": "number",
-            "description": "TODO"
+            "type": "number"
           },
           "session_time": {
-            "type": "number",
-            "description": "TODO"
+            "type": "number"
           },
           "session_count": {
-            "type": "number",
-            "description": "TODO"
+            "type": "number"
           },
           "sdk": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "device_model": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "device_os": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "rooted": {
-            "type": "boolean",
-            "description": "TODO"
+            "type": "boolean"
           },
           "test_type": {
-            "type": "number",
-            "description": "TODO"
+            "type": "number"
           },
           "app_version": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "net_type": {
-            "type": "number",
-            "description": "TODO"
+            "type": "number"
           },
           "carrier": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "web_auth": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           },
           "web_p256": {
-            "type": "string",
-            "description": "TODO"
+            "type": "string"
           }
         }
       },
