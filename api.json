@@ -1705,24 +1705,7 @@
           }
         }
       },
-      "SubscriptionType": {
-        "type": "string",
-        "enum": [
-          "iOSPush",
-          "AndroidPush",
-          "FireOSPush",
-          "ChromeExtensionPush",
-          "ChromePush",
-          "WindowsPush",
-          "SafariLegacyPush",
-          "FirefoxPush",
-          "macOSPush",
-          "HuaweiPush",
-          "SafariPush",
-          "Email",
-          "SMS"
-        ]
-      },
+
       "SubscriptionObject": {
         "type": "object",
         "properties": {
@@ -1731,7 +1714,22 @@
             "format": "uuid"
           },
           "type": {
-            "$ref": "#/components/schemas/SubscriptionType"
+            "type": "string",
+            "enum": [
+              "iOSPush",
+              "AndroidPush",
+              "FireOSPush",
+              "ChromeExtensionPush",
+              "ChromePush",
+              "WindowsPush",
+              "SafariLegacyPush",
+              "FirefoxPush",
+              "macOSPush",
+              "HuaweiPush",
+              "SafariPush",
+              "Email",
+              "SMS"
+            ]
           },
           "token": {
             "type": "string"
